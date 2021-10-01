@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
 
     <title>Amirul Mukminin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body>
     <!-- Navbar -->
@@ -152,34 +153,41 @@
     <!-- Akhir Projects -->
 
     <!-- Awal Contact -->
-    <section id="contact" class="pt-5">
-      <div class="container">
-        <div class="row text-center mb-3">
-          <div class="col">
-            <h2 class="mt-4 mb-4">CONTACT</h2>
+<div class="container-contact100">
+    <div class="wrap-contact100">
+      <form class="contact100-form validate-form" id="whatsapp">
+        <span class="contact100-form-title">Contact Me</span>
+        <input class="tujuan" type="hidden" id="noAdmin">
+        <div class="wrap-input100">
+          <span class="label-input100">Nama</span>
+          <label>
+          <input class="input100 nama" type="text" placeholder="Masukkan nama Anda">
+          </label>
+          <span class="focus-input100"></span>
+        </div>
+        <div class="wrap-input100">
+          <span class="label-input100">Nomor WhatsApp</span>
+          <label>
+          <input class="input100 nowhatsapp" type="text" placeholder="08xxxxxxxxxx">
+          </label>
+          <span class="focus-input100"></span>
+        </div>
+        <div class="wrap-input100">
+          <span class="label-input100">Alamat</span>
+          <label>
+          <textarea class="input100 alamat" placeholder="Masukkan alamat lengkap Anda"></textarea>
+          </label>
+          <span class="focus-input100"></span>
+        </div>
+        <div class="container-contact100-form-btn">
+          <div class="wrap-contact100-form-btn">
+            <div class="contact100-form-bgbtn"></div>
+            <a class="contact100-form-btn submit">Kirim</a>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <form>
-              <div class="mb-3">
-                <label for="name" class="form-label">Full Name</label>
-                <input type="text" class="form-control rounded-pill" id="name" aria-describedby="name" />
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control rounded-pill" id="email" aria-describedby="email" />
-              </div>
-              <div class="mb-3">
-                <label for="message" class="form-label">Message</label>
-                <textarea class="form-control rounded-pill" id="pesan" rows="3"></textarea>
-              </div>             
-              <button type="submit" class="btn btn-primary rounded-pill">Submit</button>                                                                       
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+      </form>
+    </div>
+  </div>
     <!-- Akhir Contact -->
 
     <!-- Awal Footer -->
@@ -210,5 +218,58 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
+    
+    //no wa admin
+$("#noAdmin").val("081370338803");
+$('.whatsapp-btn').click(function() {
+  $('#whatsapp').toggleClass('toggle');
+});
+// Onclick Whatsapp Sent!
+$('#whatsapp .submit').click(WhatsApp);
+$("#whatsapp input, #whatsapp textarea").keypress(function() {
+  if (event.which == 13) WhatsApp();
+});
+var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+function WhatsApp() {
+  var ph = '';
+  if ($('#whatsapp .nama').val() == '') { // Cek Nama
+    ph = $('#whatsapp .nama').attr('placeholder');
+    alert('Silahkan tulis ' + ph);
+    $('#whatsapp .nama').focus();
+    return false;
+  } else if ($('#whatsapp .nowhatsapp').val() == '') { // Cek Whatsapp
+    ph = $('#whatsapp .nowhatsapp').attr('placeholder');
+    alert('Silahkan tulis ' + ph);
+    $('#whatsapp .nowhatsapp').focus();
+    return false;
+  } else if ($('#whatsapp .alamat').val() == '') { // Cek Alamat
+    ph = $('#whatsapp .alamat').attr('placeholder');
+    alert('Silahkan tulis ' + ph);
+    $('#whatsapp .alamat').focus();
+    return false;
+  } else {
+    // Check Device (Mobile/Desktop)
+    var url_wa = 'https://web.whatsapp.com/send';
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      url_wa = 'whatsapp://send/';
+    }
+    // Get Value
+    var tujuan = $('#whatsapp .tujuan').val(),
+      via_url = location.href,
+      nama = $('#whatsapp .nama').val(),
+      nowhatsapp = $('#whatsapp .nowhatsapp').val(),
+      alamat = $('#whatsapp .alamat').val();
+    $(this).attr('href', url_wa + '?phone=62 ' + tujuan + '&text=Nama: ' + nama + ' %0ANo. Whatsapp: ' + nowhatsapp + '%0AAlamat: ' + alamat + ' %0A%0Avia ' + via_url);
+    var w = 960,
+      h = 540,
+      left = Number((screen.width / 2) - (w / 2)),
+      tops = Number((screen.height / 2) - (h / 2)),
+      popupWindow = window.open(this.href, '', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=1, copyhistory=no, width=' + w + ', height=' + h + ', top=' + tops + ', left=' + left);
+    popupWindow.focus();
+    return false;
+  }
+}
+    
   </body>
 </html>
