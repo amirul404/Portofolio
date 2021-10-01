@@ -6,7 +6,7 @@ menuToggle.addEventListener('click', function () {
 });
 
 //no wa admin
-$("#noAdmin").val("08123456789");
+$("#noAdmin").val("081370338803");
 $('.whatsapp-btn').click(function() {
   $('#whatsapp').toggleClass('toggle');
 });
